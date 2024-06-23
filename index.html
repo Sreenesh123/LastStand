@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/style2.css">
+</head>
+<body>
+  <div id="dropdown-container" class="dropdown-container">
+    <canvas id="gamecanvas"></canvas>
+    <div class="dropdown" id="dropdown">
+      <button class="dropbtn" id="dropbtn">Gun</button>
+      <div class="dropdown-content" id="gunDropdown">
+        <a href="#" onclick="player.switchWeapon('gun1')">
+          <img src="media/gun.png" alt="Gun 1" style="width: 50px;height: 25px;">
+      </a> 
+      <a href="#" onclick="player.switchWeapon('gun2')">
+          <img src="media/gun2.png" alt="Gun 2" style="width: 50px;height:25px;">
+      </a>
+      <a href="#" onclick="player.switchWeapon('gun3')">
+          <img src="media/gun3.png" alt="Gun 3" style="width:50px;height:25px;">
+      </a>
+      <a href="#" onclick="player.switchWeapon('gun4')">
+        <img src="media/gun4.png" alt="Gun 4" style="width:50px;height:25px;">
+    </a>
+      </div>
+  </div>
+</div>
+    <div id="toolbox" class="container">
+      <div draggable="true" id="box1"></div>
+    <div draggable="true" id="box2"></div>
+    <div draggable="true" id="box3" class="trapbar"></div>
+    <div id="floor">
+      <div id="floor1" draggable="true"></div>
+    </div>
+    <div id="playbox">
+    <button id="play">Play</button>
+    </div>
+    </div>
+    <div id="sidebar" class="container">
+      <div id="gameon" >Game on!!</div>
+      <div id="leaderboard"></div>
+      <div id="button-container">
+        <button id="pause">Pause</button>
+        <button id="resume">Resume</button>
+        <button id="restartButton">Restart</button>
+        <button id="immune">Immune</button>
+        <button id="ammobutton">Ammunition</button>
+        
+    </div>
+    </div>
+   
+<div id="nameModal" class="modal">
+    <div class="modal-content">
+      <p id="welcome">WELCOME!!</p>      
+      <p>Enter your name:</p>
+      <input type="text" id="playerNameInput">
+      <button id="submit">Submit</button>
+    </div>
+  </div>
+  
+
+<script src="index.js"></script>
+</body>
