@@ -1432,6 +1432,8 @@ class Player
                           displayleaderboard(leaderboard);
                           paused=true;
                           gameover=true;
+                          immuneButton.removeEventListener("click",immunityactivation);
+                          ammobutton.removeEventListener("click",increaseFireRate);
                           
                         }
                 }
