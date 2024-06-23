@@ -19,9 +19,9 @@ In LAST STAND, the player tries to survive waves of zombies. Use different weapo
 
 ## Controls
 
--**Move Left**: Arrow Left
--**Move Right**: Arrow Right
--**Jump**: Arrow Up
--**Slide**: Arrow Down
--**Shoot**: Mouse Click
--**fly** : Space Bar
+-**Move Left**: Arrow Left.
+-**Move Right**: Arrow Right.
+-**Jump**: Arrow Up.
+-**Slide**: Arrow Down.
+-**Shoot**: Mouse Click.
+-**fly** : Space Bar.
