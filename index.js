@@ -353,7 +353,7 @@ function displayammo() {
 }
 let immuneimage=createimage("media/immunity.png")
 let lastSpawnTime = 0;
-const spawnInterval = 4000;
+const spawnInterval = 5000;
 
 
 function spawnZombie() {
@@ -734,47 +734,53 @@ function animate()
         });
 
        
-        zombies.forEach((zombie) => {
-            let isColliding = false;        
-            boxes.some((box) => {
-                if (collision(zombie, box)) {
-                            
-                    let stackingLevel = getStackingLevel(boxes, box);
-                    let adjustedPositionY = stackingLevel * box.position.y;
-        
-                    if (zombie.position.x + zombie.width >= box.position.x && zombie.position.x <= box.position.x + box.width) {
-                        zombie.colliding = true;
-                        isColliding = true;
-        
-                        if ((zombie.facingRight && zombie.position.x <= box.position.x) || (!zombie.facingRight && zombie.position.x  <= box.position.x +box.width)) {
-                    
-                            zombie.increasespeed=false;
-                            zombie.position.y-=2;
-                        } 
-                              
-                        if (zombie.position.y + zombie.height <= adjustedPositionY) {
-                            zombie.velocity.y = 0;
-                            zombie.increasespeed=true;
-                            zombie.onBox = true;
-                        }
-                    }
-        
-                    return true;
+      zombies.forEach((zombie) => {
+          let isColliding = false;
+
+          // Combine both boxes and floors into a single array for collision detection
+          const combinedObjects = [...boxes, ...floors];
+
+          combinedObjects.some((obj) => {
+            if (collision(zombie, obj)) {
+              let stackingLevel = getStackingLevel(combinedObjects, obj);
+              let adjustedPositionY = stackingLevel * obj.position.y;
+
+              if (
+                zombie.position.x + zombie.width >= obj.position.x &&
+                zombie.position.x <= obj.position.x + obj.width
+              ) {
+                zombie.colliding = true;
+                isColliding = true;
+
+                if (
+                  (zombie.facingRight && zombie.position.x <= obj.position.x) ||
+                  (!zombie.facingRight &&
+                    zombie.position.x <= obj.position.x + obj.width)
+                ) {
+                  zombie.increasespeed = false;
+                  zombie.position.y -= 2;
                 }
-                else
-                {
-                    zombie.onBox=false;
+
+                if (zombie.position.y + zombie.height <= adjustedPositionY) {
+                  zombie.velocity.y = 0;
+                  zombie.increasespeed = true;
+                  zombie.onBox = true;
                 }
-        
-                return false;
-            });
-        
-            if (!isColliding && zombie.position.y < 348 && !zombie.onBox) {
-                zombie.position.y+=2
-                zombie.colliding = false;
+              }
+
+              return true; // Exit the 'some' loop once a collision is found
+            } else {
+              zombie.onBox = false;
             }
+
+            return false;
+          });
+
+          if (!isColliding && zombie.position.y < 348 && !zombie.onBox) {
+            zombie.position.y += 2;
+            zombie.colliding = false;
+          }
         });
-        
 
         zombies.forEach((zombie, zombieIndex) => {
             let zombieDead = false;
