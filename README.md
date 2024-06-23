@@ -2,7 +2,7 @@
 # LAST STAND
 Prepare to defend yourself against hordes of zombies using a variety of weapons and traps.
 
-[Play online at] (https://sreenesh123.github.io/delta_2_task/)
+Play online at (https://sreenesh123.github.io/delta_2_task/)
 
 ## Gameplay
 
