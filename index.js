@@ -13,7 +13,7 @@ let stackCount = 0;
 const minGap = 300;
 const maxGap = 900;
 let lastBoxX = 400;
-let boxX,bg;
+let boxX,bg,timeout;
 let viewportx=0;
 let bulletdamage=20;
 let viewporty=0;
@@ -138,7 +138,6 @@ const scrollbg= (e) => {
         {
             scrolloffset+=5;
             platforms.forEach(platform => {
-                console.log("platform moving");
                 platform.position.x-=5;
             });
             boxes.forEach(box => {
@@ -151,7 +150,6 @@ const scrollbg= (e) => {
                 {   
                     scrolloffset-=5;
                     platforms.forEach(platform => {
-                        console.log("platform moving");
                         platform.position.x+=5;
                     });
                     boxes.forEach(box => {
@@ -180,12 +178,8 @@ const handleDragStart = (e) => {
     const rect = e.target.getBoundingClientRect();
     offsetX = e.clientX - rect.left;
     offsetY = e.clientY - rect.top;
-    console.log(e.clientX);
-    console.log(rect.left);
-    console.log('OffsetX:', offsetX, 'OffsetY:', offsetY);
     if (!isPreparationPhase) return;
     draggedItem = e.target;
-    console.log(e.target);
 };
 
 const handleDragOver = (e) => {
@@ -229,7 +223,6 @@ const handleDrop = (e) => {
         floors.push(newfloor);
         obstacles.push(newfloor);
         newfloor.draw();
-        console.log(newfloor.position.y);
     }
     draggedItem = null;
 };
@@ -303,7 +296,7 @@ function immunityactivation() {
 }
 immuneButton.addEventListener("click", immunityactivation);
 function disableimmuneButton() {
-    console.log("hello");
+    
     immuneButton.disabled = true;
 
     setTimeout(() => {
@@ -390,9 +383,12 @@ function activateplay()
 {
     if(isPreparationPhase)
         {
+            clearTimeout(timeout);
             keys.right.pressed=false;
             keys.left.pressed=false;
-            toolbox.classList.add("container");
+            gameon.style.display="inline";
+            sidebar.style.display="flex";
+            toolbox.classList.remove("container");
             trapbar.classList.remove("trapbar");
             isPreparationPhase=false;
             c.clearRect(0, 0, canvas.width, canvas.height);
@@ -417,7 +413,7 @@ function activateplay()
     immuneButton.style.display="inline";
     ammobutton.style.display="inline";
     body.style.justifyContent = "space-evenly";
-    gameon.innerHTML="Game on!!"
+    gameon.innerHTML="GAME ON 🧟"
     sidebar.classList.add("sidebar")
     gameon.classList.add("gameon");
     leaderboardelement.classList.add("leaderboard");
@@ -565,10 +561,9 @@ class Trap {
 }
 
 function animate()
-{ console.log(player.position.y);
+{ 
     
     if(!paused){
-        console.log("entered animation");
         
        animationframe= requestAnimationFrame(animate);
     c.fillStyle='black';
@@ -600,7 +595,6 @@ function animate()
 
     bullets.forEach((bullet, index) => {
         bullet.update();
-        console.log(bulletform,bulletdimension);
         bullet.draw(c);
         
         if (bullet.position.y > canvas.height || bullet.position.x > canvas.width ||bullet.position.y+bullet.height >450 ) {
@@ -653,7 +647,6 @@ function animate()
             {
                 scrolloffset+=5;
                 platforms.forEach(platform => {
-                    console.log("platform moving");
                     platform.position.x-=5;
                 });
                 boxes.forEach(box => {
@@ -677,7 +670,6 @@ function animate()
                 scrolloffset-=5;
 
                 platforms.forEach(platform => {
-                    console.log("platform moving");
                     platform.position.x+=5;
                 });
                 boxes.forEach(box => {
@@ -718,11 +710,8 @@ function animate()
         floors.forEach(floor => {
             
             if (collision(player, floor)) {
-                console.log(player.position.y,floor.position.y,floor.position.y + floor.height);
                 
                 if (player.position.y + player.height < floor.position.y + player.velocity.y) {
-                    console.log(player.position.y,floor.position.y + floor.height);
-                    console.log("top collision");
                     onfloor=true;
                     player.topcollision=true;
                     player.velocity.y = 0;
@@ -730,7 +719,6 @@ function animate()
                 } 
                 else if ((player.position.y + player.velocity.y < floor.position.y + floor.height||
                     player.position.y < floor.position.y + floor.height )&& player.velocity.y<0) {
-                    console.log("bottom collision");
                     player.bottomcollision=true;
                     player.velocity.y+=2;
                 }
@@ -750,12 +738,8 @@ function animate()
             let isColliding = false;        
             boxes.some((box) => {
                 if (collision(zombie, box)) {
-                    console.log(zombie.position.x, zombie.position.x + zombie.width, box.position.x);
-                    console.log(zombie.facingRight);
-                    console.log("colliding");
-        
+                            
                     let stackingLevel = getStackingLevel(boxes, box);
-                    console.log(stackingLevel);
                     let adjustedPositionY = stackingLevel * box.position.y;
         
                     if (zombie.position.x + zombie.width >= box.position.x && zombie.position.x <= box.position.x + box.width) {
@@ -763,15 +747,12 @@ function animate()
                         isColliding = true;
         
                         if ((zombie.facingRight && zombie.position.x <= box.position.x) || (!zombie.facingRight && zombie.position.x  <= box.position.x +box.width)) {
-                            console.log("entering side collision");
+                    
                             zombie.increasespeed=false;
-                            console.log(zombie.velocity.x,zombie.position.x,zombie.velocity.y);
                             zombie.position.y-=2;
-                            console.log(zombie.position.y, zombie.position.y + zombie.height, stackingLevel, adjustedPositionY);
                         } 
                               
                         if (zombie.position.y + zombie.height <= adjustedPositionY) {
-                            console.log("stopping");
                             zombie.velocity.y = 0;
                             zombie.increasespeed=true;
                             zombie.onBox = true;
@@ -782,7 +763,6 @@ function animate()
                 }
                 else
                 {
-                    console.log("entering else");
                     zombie.onBox=false;
                 }
         
@@ -790,7 +770,6 @@ function animate()
             });
         
             if (!isColliding && zombie.position.y < 348 && !zombie.onBox) {
-                console.log("zombie coming down");
                 zombie.position.y+=2
                 zombie.colliding = false;
             }
@@ -871,14 +850,16 @@ for (let i = 0; i < zombies.length; i++) {
 }
 
 function restartGame() {
+    
     clearInterval(timeinterval);
     switchguns.style.display="none";
     sidebar.classList.remove("container");
+    sidebar.style.display="none";
+    gameon.style.display="none";
     submit.addEventListener('click',submitaction);
     removedragaction();
     c.clearRect(0, 0, canvas.width, canvas.height);
     drawcanvaselements();
-    console.log("entered restart");
     canvas.removeEventListener("click",Bulletshoot);
     if (animationframe) {
         cancelAnimationFrame(animationframe);
@@ -914,7 +895,6 @@ function restartGame() {
     paused = false;
     restart = true;
     playerNameInput.value = "";
-    console.log("showing modal");
     showModal();
 }
 restartButton.addEventListener("click", restartGame);
@@ -922,8 +902,10 @@ restartButton.addEventListener("click", restartGame);
 let nameInput = document.getElementById("playerNameInput");
 function submitaction() {
     
-    toolbox.classList.remove("container");
+    // toolbox.classList.remove("container");
     sidebar.classList.remove("container");
+    // sidebar.style.display="flex";
+    gameon.style.display="none";
     canvas.removeEventListener('click', Bulletshoot);
     dragaction();
     document.addEventListener('keydown', scrollbg);
@@ -937,9 +919,8 @@ function submitaction() {
         paused=false;
         isPreparationPhase = true;
         if(isPreparationPhase){
-      setTimeout(() => {
+      timeout=setTimeout(() => {
         isPreparationPhase = true;
-        console.log("settimeout")
        activateplay();
 
       }, 120000); };
@@ -1006,7 +987,7 @@ pause.addEventListener('click',function()
     
 })
 resume.addEventListener("click",function()
-{   console.log('entered resume');
+{  
     paused=false;
     if(!paused)
         {
@@ -1302,7 +1283,6 @@ class Player
             reloadammo=50;
             break;
           case 'gun2':
-            console.log("hello");
             this.gun=createimage("media/gun2.png");
             this.gunDimensions={width:60,height:30};    
             bulletdamage=25;   
@@ -1354,7 +1334,6 @@ class Player
         
         if (this.facingRight) {
             c.rotate(angle);
-            console.log( this.gun.height );
             c.drawImage(this.gun, 0, -this.gunDimensions.height/ 2,this.gunDimensions.width,this.gunDimensions.height);
         } else {
             angle = -Math.atan2(mousey - pivoty, mousex - pivotx); 
@@ -1438,7 +1417,7 @@ class Player
                         }
                     if(player.health===0)
                         {
-                          gameon.innerHTML="Game over!!";
+                          gameon.innerHTML = "GAME OVER💀";
                           leaderboarddetails.push({playerName:playerName,score:gamescore})
                           localStorage.setItem("leaderboarddetails",JSON.stringify(leaderboarddetails));
                           let leaderboard = JSON.parse(localStorage.getItem("leaderboarddetails")) || [];
@@ -1447,7 +1426,7 @@ class Player
                           displayleaderboard(leaderboard);
                           paused=true;
                           gameover=true;
-                          console.log("gameover");
+                          
                         }
                 }
      } })
