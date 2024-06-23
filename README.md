@@ -2,6 +2,8 @@
 # LAST STAND
 Prepare to defend yourself against hordes of zombies using a variety of weapons and traps.
 
+[Play online at] (https://sreenesh123.github.io/delta_2_task/)
+
 ## Gameplay
 
 In LAST STAND, the player tries to survive waves of zombies. Use different weapons to shoot the zombies and place traps to hurt them. The game gets progressively harder as more zombies spawn. Stay alive,kill zombies and shoot up your points which will be displayed in the leaderboard once the game ends.
