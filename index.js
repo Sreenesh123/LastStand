@@ -95,6 +95,8 @@ const platformCount = 100;
 const platformY = 450;
 const immuneButton = document.getElementById("immune");
 const ammobutton = document.getElementById('ammobutton');
+immuneButton.disabled=false;
+ammobutton.disabled=false;
 
 const scrollspeed = 20;
 function playBackgroundMusic() {
@@ -858,6 +860,8 @@ for (let i = 0; i < zombies.length; i++) {
 function restartGame() {
     
     clearInterval(timeinterval);
+    immuneButton.disabled=false;
+    ammobutton.disabled=false;
     switchguns.style.display="none";
     sidebar.classList.remove("container");
     sidebar.style.display="none";
