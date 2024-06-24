@@ -305,6 +305,22 @@ input{
   padding-left: 50;
   
  }
+
+.input {
+  border: none;
+  outline: none;
+  border-radius: 100px;
+  padding: 1em;
+  background-color: #e1e2e3;
+  box-shadow: inset 2px 5px 10px rgba(0, 0, 0, 0.3);
+  transition: 300ms ease-in-out;
+}
+
+.input:focus {
+  background-color: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 8px 8px 70px #969696, -8px -8px 70px #01bdc0;
+}
 button {
  width: 9em;
  height: 1.75em;
