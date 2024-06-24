@@ -862,6 +862,8 @@ function restartGame() {
     sidebar.classList.remove("container");
     sidebar.style.display="none";
     gameon.style.display="none";
+    pause.addEventListener("click", pausing);
+    resume.addEventListener("click", resuming);
     submit.addEventListener('click',submitaction);
     removedragaction();
     c.clearRect(0, 0, canvas.width, canvas.height);
@@ -985,23 +987,25 @@ window.addEventListener("load", function() {
     showModal();
 });
 
-pause.addEventListener('click',function()
+function pausing()
 {
-    paused=true;
-    immuneButton.removeEventListener('click',immunityactivation);
-    ammobutton.removeEventListener('click',increaseFireRate);
     
-})
-resume.addEventListener("click",function()
-{  
-    paused=false;
-    if(!paused)
-        {
-            immuneButton.addEventListener('click',immunityactivation);
-    ammobutton.addEventListener('click',increaseFireRate);
-            animate();
-        }
-})
+    paused = true;
+    immuneButton.removeEventListener("click", immunityactivation);
+    ammobutton.removeEventListener("click", increaseFireRate);
+}
+function resuming()
+{
+ paused = false;
+ if (!paused) {
+   immuneButton.addEventListener("click", immunityactivation);
+   ammobutton.addEventListener("click", increaseFireRate);
+
+   animate();
+ }
+}
+pause.addEventListener('click',pausing);
+resume.addEventListener('click',resuming);
 
 
 
@@ -1434,6 +1438,8 @@ class Player
                           gameover=true;
                           immuneButton.removeEventListener("click",immunityactivation);
                           ammobutton.removeEventListener("click",increaseFireRate);
+                          pause.removeEventListener('click',pausing);
+                          resume.removeEventListener('click',resuming)
                           
                         }
                 }
