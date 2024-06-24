@@ -64,7 +64,7 @@ canvas{
   #ammobutton
 {
   display: none;
-  width:85px;
+  width:90px;
   height:25px;
   font-size: 14px;
 }
@@ -84,6 +84,7 @@ canvas{
   }
   #pause:hover,#resume:hover,#restartButton:hover,#immune:hover,#play:hover,#ammobutton:hover {
     background-color: #a7a3a3;
+    border-radius:30em ;
 }
 
   
@@ -304,4 +305,33 @@ input{
   padding-left: 50;
   
  }
+button {
+ width: 9em;
+ height: 1.75em;
+ border-radius: 30em;
+ font-size: 15px;
+ font-family: inherit;
+ border: none;
+ position: relative;
+ overflow: hidden;
+ z-index: 1;
+ 
+}
 
+button::before {
+ content: '';
+ width: 0;
+ height: 1.75em;
+ border-radius: 30em;
+ position: absolute;
+ top: 0;
+ left: 0;
+ background-image: linear-gradient(to right, #12686a 0%, #5aebee 100%);
+ transition: .5s ease;
+ display: block;
+ z-index: -1;
+}
+
+button:hover::before {
+ width: 9em;
+}
