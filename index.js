@@ -770,7 +770,7 @@ function animate()
                 }
               }
 
-              return true; // Exit the 'some' loop once a collision is found
+              return true; 
             } else {
               zombie.onBox = false;
             }
@@ -1074,19 +1074,18 @@ const bullets = [];
 
 const sprites = {
     walk: {
-        image: createimage("media/zombie1.png"), // Adjust image source as needed
-        // cropWidths: [183, 229, 232, 191, 194],
-        cropheight: 378, // Assuming all frames have the same height
+        image: createimage("media/zombie1.png"),         
+        cropheight: 378, 
         frameCount: 6
     },
     run: {
-        image: createimage("media/zombierun1.png"), // Adjust image source as needed
-        cropheight: 300, // Assuming all frames have the same height
+        image: createimage("media/zombierun1.png"), 
+        cropheight: 300, 
         frameCount: 10
     },
     attack: {
-        image: createimage("media/zombieattack1.png"), // Adjust image source as needed
-        cropheight: 377, // Assuming all frames have the same height
+        image: createimage("media/zombieattack1.png"), 
+        cropheight: 377, 
         frameCount: 6
     },
     jump:
