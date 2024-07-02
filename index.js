@@ -819,8 +819,6 @@ zombies.forEach((zombie) => {
 
         zombies.forEach((zombie) => {
           let isColliding = false;
-
-          // Combine both boxes and floors into a single array for collision detection
           const combinedObjects = [...boxes, ...floors];
 
           combinedObjects.some((obj) => {
@@ -1000,10 +998,7 @@ restartButton.addEventListener("click", restartGame);
 
 let nameInput = document.getElementById("playerNameInput");
 function submitaction() {
-    
-    // toolbox.classList.remove("container");
     sidebar.classList.remove("container");
-    // sidebar.style.display="flex";
     gameon.style.display="none";
     canvas.removeEventListener('click', Bulletshoot);
     dragaction();
