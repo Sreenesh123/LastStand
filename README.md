@@ -1,4 +1,4 @@
-# delta_2_task
+
 # LAST STAND
 Prepare to defend yourself against hordes of zombies using a variety of weapons and traps.
 
